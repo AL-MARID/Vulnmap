@@ -1,0 +1,339 @@
+# Vulnmap Configuration File
+
+# AI Provider Settings
+ai_providers:
+  openai:
+    enabled: false
+    api_key: "sk-your-openai-api-key-here"
+    model: "gpt-4o"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+
+  claude:
+    enabled: false
+    api_key: "sk-ant-your-claude-api-key-here"
+    model: "claude-3-5-sonnet-20241022"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+
+  grok:
+    enabled: false
+    api_key: "xai-your-grok-api-key-here"
+    base_url: "https://api.x.ai/v1"
+    model: "grok-beta"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+
+  ollama:
+    enabled: false
+    base_url: "http://localhost:11434"
+    model: "llama2"
+    temperature: 0.7
+    timeout: 60
+  # Gemini is the primary and only enabled provider in this configuration
+  gemini:
+    enabled: true
+    api_key: "AIzaSy-your-gemini-api-key-here"
+    model: "gemini-2.5-flash"
+    temperature: 0.7
+    timeout: 3600
+
+# Scanner Settings
+scanner:
+  target_url: ""
+  default_threads: 2
+  default_depth: 10
+  max_urls: 50000
+  timeout: 3600
+  user_agent: "Vulnmap/1.0 (Security Scanner)"
+  follow_redirects: true
+  verify_ssl: true
+  max_retries: 5
+  enable_recon: true
+  full_scan: true
+  quick_scan: false
+  ai_provider: "gemini"
+  proxy: ""
+  custom_headers: {}
+  cookies: {}
+
+# Vulnerability Scanner Settings
+vulnerability_scanner:
+  enabled_checks:
+    - sql_injection
+    - xss
+    - command_injection
+    - ssrf
+    - xxe
+    - path_traversal
+    - csrf
+    - authentication_bypass
+    - information_disclosure
+    - security_misconfiguration
+    - lfi
+    - rfi
+    - open_redirect
+    - cors_misconfiguration
+    - insecure_deserialization
+    - broken_authentication
+    - sensitive_data_exposure
+    - xml_injection
+    - ldap_injection
+    - ssti
+    - crlf_injection
+    - host_header_injection
+    - jwt_vulnerabilities
+    - api_vulnerabilities
+    - graphql_vulnerabilities
+    - api_security
+    - business_logic
+    - authentication
+    - file_upload
+    - websocket
+    - anomaly_detector
+  payload_generation:
+    use_ai: true
+    context_aware: true
+    cve_database: true
+    custom_wordlists: true
+    use_payload_obfuscation: true
+  ai_call_policy:
+    mode: "prioritize"          # prioritize = AI for high/medium risk first, then low
+    high_risk_threshold: 0.6    # score >= 0.6 => call AI immediately
+    max_ai_per_target: 5
+  testing:
+    thorough_mode: true
+    time_based_detection_delay: 10
+    blind_injection_attempts: 5
+
+# WebSocket Testing
+websocket:
+  enabled: true
+  test_origin_validation: true
+  test_authentication: true
+  test_injection_attacks: true
+  test_dos_attacks: true
+  test_rate_limiting: true
+  test_tls_verification: true
+  connection_timeout: 30
+  max_message_size: 131072
+
+# Machine Learning Anomaly Detection
+ml_detection:
+  enabled: true
+  baseline_samples: 500
+  anomaly_threshold: 0.6
+  features:
+    - response_time
+    - status_code
+    - response_size
+    - error_patterns
+    - parameter_behavior
+  save_model: true
+  model_path: "data/ml_models/anomaly_detector.pkl"
+
+# Enhanced OSINT Reconnaissance
+osint:
+  enabled: true
+  google_dorking: true
+  email_harvesting: true
+  metadata_extraction: true
+  social_media_check: true
+  breach_database_check: true
+  certificate_transparency: true
+  github_search: true
+  pastebin_search: true
+  max_search_results: 500
+  timeout: 120
+
+# Payload Obfuscation
+payload_obfuscation:
+  enabled: true
+  techniques:
+    - base64_encoding
+    - url_encoding
+    - unicode_encoding
+    - hex_encoding
+    - case_manipulation
+    - comment_insertion
+    - concatenation
+    - null_byte_injection
+    - double_encoding
+    - character_substitution
+  waf_bypass_mode: true
+
+# API Security Testing
+api_security:
+  enabled: true
+  test_owasp_api_top10: true
+  test_graphql: true
+  check_rate_limiting: true
+  check_authentication: true
+  check_excessive_data_exposure: true
+
+# Business Logic Testing
+business_logic:
+  enabled: true
+  test_price_manipulation: true
+  test_workflow_bypass: true
+  test_race_conditions: true
+  test_quantity_limits: true
+  test_coupon_abuse: true
+
+# Authentication Testing
+authentication:
+  enabled: true
+  test_weak_passwords: true
+  test_brute_force_protection: true
+  test_session_management: true
+  test_jwt_security: true
+  test_oauth_security: true
+  test_mfa_bypass: true
+
+# File Upload Testing
+file_upload:
+  enabled: true
+  test_unrestricted_upload: true
+  test_path_traversal: true
+  test_file_type_bypass: true
+  test_malicious_content: true
+  max_file_size_test: 52428800
+
+# Collaborative Scanning
+collaboration:
+  enabled: true
+  session_storage: "data/sessions"
+  export_format: "json"
+  auto_distribute_work: true
+
+# Reconnaissance Settings
+reconnaissance:
+  enabled_modules:
+    - subdomain_enumeration
+    - dns_records
+    - whois_lookup
+    - technology_detection
+    - ssl_certificate_info
+    - port_scanning
+    - directory_bruteforce
+    - email_harvesting
+    - osint_gathering
+  subdomain_sources:
+    - crt.sh
+    - hackertarget
+    - threatcrowd
+    - virustotal
+    - sublist3r
+  port_scan:
+    common_ports: [21, 22, 25, 80, 443, 8080, 8443, 3000, 3306, 5432, 6379, 27017, 8888, 9090]
+    scan_timeout: 5
+
+# Report Settings
+reporting:
+  enabled: true
+  output_directory: "reports"
+  output_filename: ""
+  default_format: "html"
+  include_sections:
+    - executive_summary
+    - vulnerability_details
+    - remediation_guide
+    - technical_details
+    - reconnaissance_data
+    - appendix
+  severity_colors:
+    critical: "#8B0000"
+    high: "#FF4500"
+    medium: "#FFA500"
+    low: "#FFD700"
+    info: "#87CEEB"
+  branding:
+    company_name: "Vulnmap Security"
+    logo_path: "templates/logo.png"
+    footer: "Confidential Security Assessment Report"
+
+# Logging Settings
+logging:
+  level: "DEBUG"
+  log_to_file: true
+  log_file: "logs/vulnmap.log"
+  max_file_size: 52428800
+  backup_count: 10
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Database Settings
+database:
+  enabled: true
+  type: "sqlite"
+  path: "data/vulnmap.db"
+  auto_cleanup_days: 0
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  provider_limits:
+    gemini:
+      enabled: true
+      max_requests_per_minute: 10
+      max_tokens_per_minute: 20000
+  global:
+    concurrency: 1
+    backoff_seconds: 10
+    retries: 6
+    batching:
+      enabled: true
+      max_items_per_batch: 5
+      batch_delay_seconds: 5
+  cache:
+    enabled: true
+    ttl_seconds: 86400
+
+# Proxy Settings
+proxy:
+  enabled: false
+  http: ""
+  https: ""
+
+# Advanced Settings
+advanced:
+  enable_javascript_rendering: true
+  screenshot_enabled: true
+  custom_dns_servers: []
+  exclude_extensions: []
+  exclude_patterns: []
+  max_response_size: 10485760
+
+# Plugin System (v1.3.0)
+plugin_manager:
+  enabled: true
+  plugin_directory: "plugins"
+  auto_load: true
+
+# Notification System (v1.3.0)
+notifications:
+  enabled: false
+  notify_on_critical: false
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: "your-email@gmail.com"
+    password: "your-app-password"
+    from_address: "vulnmap@yourcompany.com"
+    to_addresses:
+      - "security-team@yourcompany.com"
+      - "admin@yourcompany.com"
+  slack:
+    enabled: false
+    webhook_url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+    channel: "#security-alerts"
+    username: "Vulnmap Scanner"
+    icon_emoji: ":shield:"
+  discord:
+    enabled: false
+    webhook_url: "https://discord.com/api/webhooks/YOUR/WEBHOOK/URL"
+    username: "Vulnmap Scanner"
+    avatar_url: ""
